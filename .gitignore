@@ -1,0 +1,22 @@
+# Build and Release folders
+bin/
+obj/
+[Ee]bin/
+[Rr]elease/
+[Dd]ebug/
+
+# Visual Studio files
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+# Packages and artifacts
+packages/
+!packages/repositories.config
+*.nupkg
+
+# Temporary files
+*.tmp
+*.log
