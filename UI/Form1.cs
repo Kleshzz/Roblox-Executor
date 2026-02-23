@@ -111,6 +111,7 @@ namespace RobloxExecutor.UI
         {
             Logger.Log("Application started");
             AppSettings.Load();
+            DiscordManager.Initialize();
 
             AddNewTab();
             RefreshTabScroll();
@@ -563,6 +564,7 @@ namespace RobloxExecutor.UI
             if (state == VelocityStates.Attached)
             {
                 btnInject.BackColor = Color.FromArgb(20, 160, 80);
+                DiscordManager.SetInjected();
                 if (AppSettings.AutoExecute) await RunAutoExec();
             }
             else
@@ -627,6 +629,7 @@ namespace RobloxExecutor.UI
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             Logger.Log("Application closed");
+            DiscordManager.Shutdown();
             try { vel.StopCommunication(); } catch { }
             base.OnFormClosing(e);
         }
