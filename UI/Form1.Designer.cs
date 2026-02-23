@@ -17,7 +17,6 @@ namespace RobloxExecutor.UI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.richTextBox1 = new FastColoredTextBoxNS.FastColoredTextBox();
             this.btnExecute = new System.Windows.Forms.Button();
             this.btnInject = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
@@ -29,54 +28,36 @@ namespace RobloxExecutor.UI
             this.minimizeButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
             this.bottomPanel = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.richTextBox1)).BeginInit();
+            this.tabStrip = new System.Windows.Forms.Panel();
+            this.tabContent = new System.Windows.Forms.Panel();
             this.titlePanel.SuspendLayout();
             this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // richTextBox1
+            // tabStrip  (полоса кнопок-вкладок)
             // 
-            this.richTextBox1.AutoCompleteBracketsList = new char[] {
-        '(',
-        ')',
-        '{',
-        '}',
-        '[',
-        ']',
-        '\"',
-        '\"',
-        '\'',
-        '\''};
-            this.richTextBox1.AutoScrollMinSize = new System.Drawing.Size(27, 16);
-            this.richTextBox1.BackBrush = null;
-            this.richTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.richTextBox1.CaretColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(255)))));
-            this.richTextBox1.CharHeight = 16;
-            this.richTextBox1.CharWidth = 8;
-            this.richTextBox1.CurrentLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(100)))), ((int)(((byte)(130)))), ((int)(((byte)(150)))));
-            this.richTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.richTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.richTextBox1.Font = new System.Drawing.Font("Consolas", 10.5F);
-            this.richTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.richTextBox1.IndentBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.richTextBox1.IsReplaceMode = false;
-            this.richTextBox1.Language = FastColoredTextBoxNS.Language.Lua;
-            this.richTextBox1.LineNumberColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.richTextBox1.Location = new System.Drawing.Point(10, 45);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Paddings = new System.Windows.Forms.Padding(0);
-            this.richTextBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(80)))), ((int)(((byte)(100)))), ((int)(((byte)(130)))));
-            this.richTextBox1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("richTextBox1.ServiceColors")));
-            this.richTextBox1.Size = new System.Drawing.Size(780, 310);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Zoom = 100;
+            this.tabStrip.BackColor = System.Drawing.Color.FromArgb(20, 20, 20);
+            this.tabStrip.Location = new System.Drawing.Point(0, 38);
+            this.tabStrip.Name = "tabStrip";
+            this.tabStrip.Size = new System.Drawing.Size(800, 30);
+            this.tabStrip.TabIndex = 3;
+            this.tabStrip.Paint += new System.Windows.Forms.PaintEventHandler(this.TabStrip_Paint);
+            this.tabStrip.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TabStrip_MouseClick);
+            // 
+            // tabContent  (область содержимого вкладок)
+            // 
+            this.tabContent.BackColor = System.Drawing.Color.FromArgb(18, 18, 18);
+            this.tabContent.Location = new System.Drawing.Point(0, 68);
+            this.tabContent.Name = "tabContent";
+            this.tabContent.Size = new System.Drawing.Size(800, 294);
+            this.tabContent.TabIndex = 4;
             // 
             // btnExecute
             // 
-            this.btnExecute.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnExecute.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
             this.btnExecute.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnExecute.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.btnExecute.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.btnExecute.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(50, 50, 50);
+            this.btnExecute.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(45, 45, 45);
             this.btnExecute.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExecute.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnExecute.ForeColor = System.Drawing.Color.White;
@@ -90,10 +71,10 @@ namespace RobloxExecutor.UI
             // 
             // btnInject
             // 
-            this.btnInject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnInject.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
             this.btnInject.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnInject.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.btnInject.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.btnInject.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(50, 50, 50);
+            this.btnInject.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(45, 45, 45);
             this.btnInject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnInject.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnInject.ForeColor = System.Drawing.Color.White;
@@ -107,10 +88,10 @@ namespace RobloxExecutor.UI
             // 
             // btnClear
             // 
-            this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnClear.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
             this.btnClear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.btnClear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(50, 50, 50);
+            this.btnClear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(45, 45, 45);
             this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClear.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnClear.ForeColor = System.Drawing.Color.White;
@@ -124,10 +105,10 @@ namespace RobloxExecutor.UI
             // 
             // btnOpen
             // 
-            this.btnOpen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnOpen.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
             this.btnOpen.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOpen.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.btnOpen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.btnOpen.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(50, 50, 50);
+            this.btnOpen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(45, 45, 45);
             this.btnOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOpen.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnOpen.ForeColor = System.Drawing.Color.White;
@@ -141,10 +122,10 @@ namespace RobloxExecutor.UI
             // 
             // btnSave
             // 
-            this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnSave.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
             this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(50, 50, 50);
+            this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(45, 45, 45);
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.btnSave.ForeColor = System.Drawing.Color.White;
@@ -158,7 +139,7 @@ namespace RobloxExecutor.UI
             // 
             // titlePanel
             // 
-            this.titlePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.titlePanel.BackColor = System.Drawing.Color.FromArgb(18, 18, 18);
             this.titlePanel.Controls.Add(this.titleLabel);
             this.titlePanel.Controls.Add(this.settingsButton);
             this.titlePanel.Controls.Add(this.minimizeButton);
@@ -174,7 +155,7 @@ namespace RobloxExecutor.UI
             // titleLabel
             // 
             this.titleLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.titleLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(255)))));
+            this.titleLabel.ForeColor = System.Drawing.Color.FromArgb(100, 180, 255);
             this.titleLabel.Location = new System.Drawing.Point(12, 8);
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(200, 22);
@@ -188,10 +169,10 @@ namespace RobloxExecutor.UI
             // 
             this.settingsButton.BackColor = System.Drawing.Color.Transparent;
             this.settingsButton.FlatAppearance.BorderSize = 0;
-            this.settingsButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.settingsButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(50, 50, 50);
             this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsButton.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.settingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+            this.settingsButton.ForeColor = System.Drawing.Color.FromArgb(160, 160, 160);
             this.settingsButton.Location = new System.Drawing.Point(694, 1);
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Size = new System.Drawing.Size(36, 36);
@@ -205,10 +186,10 @@ namespace RobloxExecutor.UI
             // 
             this.minimizeButton.BackColor = System.Drawing.Color.Transparent;
             this.minimizeButton.FlatAppearance.BorderSize = 0;
-            this.minimizeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.minimizeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(50, 50, 50);
             this.minimizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.minimizeButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.minimizeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.minimizeButton.ForeColor = System.Drawing.Color.FromArgb(180, 180, 180);
             this.minimizeButton.Location = new System.Drawing.Point(730, 4);
             this.minimizeButton.Name = "minimizeButton";
             this.minimizeButton.Size = new System.Drawing.Size(30, 28);
@@ -222,10 +203,10 @@ namespace RobloxExecutor.UI
             // 
             this.closeButton.BackColor = System.Drawing.Color.Transparent;
             this.closeButton.FlatAppearance.BorderSize = 0;
-            this.closeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.closeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(200, 40, 40);
             this.closeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.closeButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.closeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.closeButton.ForeColor = System.Drawing.Color.FromArgb(180, 180, 180);
             this.closeButton.Location = new System.Drawing.Point(762, 4);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(30, 28);
@@ -237,7 +218,7 @@ namespace RobloxExecutor.UI
             // 
             // bottomPanel
             // 
-            this.bottomPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.bottomPanel.BackColor = System.Drawing.Color.FromArgb(15, 15, 15);
             this.bottomPanel.Controls.Add(this.btnExecute);
             this.bottomPanel.Controls.Add(this.btnOpen);
             this.bottomPanel.Controls.Add(this.btnSave);
@@ -252,9 +233,10 @@ namespace RobloxExecutor.UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.BackColor = System.Drawing.Color.FromArgb(18, 18, 18);
             this.ClientSize = new System.Drawing.Size(800, 422);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.tabStrip);
+            this.Controls.Add(this.tabContent);
             this.Controls.Add(this.titlePanel);
             this.Controls.Add(this.bottomPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -263,14 +245,13 @@ namespace RobloxExecutor.UI
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Velocity Executor";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.richTextBox1)).EndInit();
             this.titlePanel.ResumeLayout(false);
             this.bottomPanel.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
-        private FastColoredTextBoxNS.FastColoredTextBox richTextBox1;
+        private System.Windows.Forms.Panel tabStrip;
+        private System.Windows.Forms.Panel tabContent;
         private System.Windows.Forms.Button btnExecute;
         private System.Windows.Forms.Button btnInject;
         private System.Windows.Forms.Button btnClear;
