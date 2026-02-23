@@ -30,6 +30,7 @@ namespace RobloxExecutor.UI
             Logger.Log("Application started");
             AppSettings.Load();
             LuaAutocomplete.Init(richTextBox1);
+            LuaStyle.Apply(richTextBox1);
             InitSettingsOverlay();
 
             // Применяем начальные настройки
@@ -271,6 +272,47 @@ namespace RobloxExecutor.UI
         private void button3_Click(object sender, EventArgs e)
         {
             richTextBox1.Clear();
+        }
+
+        // Open File
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (OpenFileDialog ofd = new OpenFileDialog())
+                {
+                    ofd.Filter = "Lua files (*.lua)|*.lua|Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                    if (ofd.ShowDialog() == DialogResult.OK)
+                    {
+                        richTextBox1.Text = File.ReadAllText(ofd.FileName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException("btnOpen_Click", ex);
+            }
+        }
+
+        // Save File
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SaveFileDialog sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "Lua files (*.lua)|*.lua|Text files (*.txt)|*.txt";
+                    sfd.FileName = "script.lua";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        File.WriteAllText(sfd.FileName, richTextBox1.Text);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException("btnSave_Click", ex);
+            }
         }
 
 

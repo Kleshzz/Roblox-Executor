@@ -15,6 +15,8 @@ namespace RobloxExecutor.UI
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.richTextBox1 = new FastColoredTextBoxNS.FastColoredTextBox();
             this.btnExecute = new System.Windows.Forms.Button();
             this.btnInject = new System.Windows.Forms.Button();
@@ -23,188 +25,249 @@ namespace RobloxExecutor.UI
             this.btnSave = new System.Windows.Forms.Button();
             this.titlePanel = new System.Windows.Forms.Panel();
             this.titleLabel = new System.Windows.Forms.Label();
-            this.closeButton = new System.Windows.Forms.Button();
-            this.minimizeButton = new System.Windows.Forms.Button();
             this.settingsButton = new System.Windows.Forms.Button();
+            this.minimizeButton = new System.Windows.Forms.Button();
+            this.closeButton = new System.Windows.Forms.Button();
             this.bottomPanel = new System.Windows.Forms.Panel();
+            ((System.ComponentModel.ISupportInitialize)(this.richTextBox1)).BeginInit();
+            this.titlePanel.SuspendLayout();
+            this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
-
-            // === richTextBox1 (FastColoredTextBox) ===
-            this.richTextBox1.Language = FastColoredTextBoxNS.Language.Lua;
-            this.richTextBox1.BackColor = System.Drawing.Color.FromArgb(18, 18, 18);
-            this.richTextBox1.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
-            this.richTextBox1.CaretColor = System.Drawing.Color.FromArgb(100, 180, 255);
-            this.richTextBox1.IndentBackColor = System.Drawing.Color.FromArgb(22, 22, 22);
-            this.richTextBox1.LineNumberColor = System.Drawing.Color.FromArgb(80, 80, 80);
-            this.richTextBox1.CurrentLineColor = System.Drawing.Color.FromArgb(30, 100, 180, 255);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.AutoCompleteBracketsList = new char[] {
+        '(',
+        ')',
+        '{',
+        '}',
+        '[',
+        ']',
+        '\"',
+        '\"',
+        '\'',
+        '\''};
+            this.richTextBox1.AutoScrollMinSize = new System.Drawing.Size(27, 16);
+            this.richTextBox1.BackBrush = null;
+            this.richTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.richTextBox1.CaretColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(255)))));
+            this.richTextBox1.CharHeight = 16;
+            this.richTextBox1.CharWidth = 8;
+            this.richTextBox1.CurrentLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(100)))), ((int)(((byte)(130)))), ((int)(((byte)(150)))));
+            this.richTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.richTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.richTextBox1.Font = new System.Drawing.Font("Consolas", 10.5F);
+            this.richTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.richTextBox1.IndentBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.richTextBox1.IsReplaceMode = false;
+            this.richTextBox1.Language = FastColoredTextBoxNS.Language.Lua;
+            this.richTextBox1.LineNumberColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.richTextBox1.Location = new System.Drawing.Point(10, 45);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Paddings = new System.Windows.Forms.Padding(0);
+            this.richTextBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(80)))), ((int)(((byte)(100)))), ((int)(((byte)(130)))));
+            this.richTextBox1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("richTextBox1.ServiceColors")));
             this.richTextBox1.Size = new System.Drawing.Size(780, 310);
             this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-
-            // === titlePanel ===
-            this.titlePanel.BackColor = System.Drawing.Color.FromArgb(15, 15, 15);
-            this.titlePanel.Location = new System.Drawing.Point(0, 0);
-            this.titlePanel.Size = new System.Drawing.Size(800, 38);
-            this.titlePanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseUp);
-            this.titlePanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseDown);
-            this.titlePanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseMove);
-
-            // === titleLabel ===
-            this.titleLabel.Text = "⚡ Velocity Executor";
-            this.titleLabel.ForeColor = System.Drawing.Color.FromArgb(100, 180, 255);
-            this.titleLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.titleLabel.Location = new System.Drawing.Point(12, 8);
-            this.titleLabel.Size = new System.Drawing.Size(200, 22);
-            this.titleLabel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseUp);
-            this.titleLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseDown);
-            this.titleLabel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseMove);
-
-            // === closeButton ===
-            this.closeButton.Text = "✕";
-            this.closeButton.ForeColor = System.Drawing.Color.FromArgb(180, 180, 180);
-            this.closeButton.BackColor = System.Drawing.Color.Transparent;
-            this.closeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.closeButton.FlatAppearance.BorderSize = 0;
-            this.closeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(200, 40, 40);
-            this.closeButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.closeButton.Location = new System.Drawing.Point(762, 4);
-            this.closeButton.Size = new System.Drawing.Size(30, 28);
-            this.closeButton.TabStop = false;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-
-            // === minimizeButton ===
-            this.minimizeButton.Text = "─";
-            this.minimizeButton.ForeColor = System.Drawing.Color.FromArgb(180, 180, 180);
-            this.minimizeButton.BackColor = System.Drawing.Color.Transparent;
-            this.minimizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.minimizeButton.FlatAppearance.BorderSize = 0;
-            this.minimizeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(50, 50, 50);
-            this.minimizeButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.minimizeButton.Location = new System.Drawing.Point(730, 4);
-            this.minimizeButton.Size = new System.Drawing.Size(30, 28);
-            this.minimizeButton.TabStop = false;
-            this.minimizeButton.Click += new System.EventHandler(this.minimizeButton_Click);
-
-            // === settingsButton ===
-            this.settingsButton.Text = "⚙";
-            this.settingsButton.ForeColor = System.Drawing.Color.FromArgb(160, 160, 160);
-            this.settingsButton.BackColor = System.Drawing.Color.Transparent;
-            this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.settingsButton.FlatAppearance.BorderSize = 0;
-            this.settingsButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(50, 50, 50);
-            this.settingsButton.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.settingsButton.Location = new System.Drawing.Point(694, 1);
-            this.settingsButton.Size = new System.Drawing.Size(36, 36);
-            this.settingsButton.TabStop = false;
-            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
-
-            // === bottomPanel ===
-            this.bottomPanel.BackColor = System.Drawing.Color.FromArgb(15, 15, 15);
-            this.bottomPanel.Location = new System.Drawing.Point(0, 362);
-            this.bottomPanel.Size = new System.Drawing.Size(800, 60);
-
-            // === btnExecute ===
-            this.btnExecute.Text = "▶  Execute";
-            this.btnExecute.ForeColor = System.Drawing.Color.White;
-            this.btnExecute.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            this.richTextBox1.Zoom = 100;
+            // 
+            // btnExecute
+            // 
+            this.btnExecute.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnExecute.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExecute.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.btnExecute.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.btnExecute.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExecute.FlatAppearance.BorderSize = 1;
-            this.btnExecute.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(50, 50, 50);
-            this.btnExecute.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(45, 45, 45);
             this.btnExecute.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnExecute.ForeColor = System.Drawing.Color.White;
             this.btnExecute.Location = new System.Drawing.Point(12, 10);
+            this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(110, 38);
             this.btnExecute.TabIndex = 1;
-            this.btnExecute.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExecute.Text = "▶  Execute";
+            this.btnExecute.UseVisualStyleBackColor = false;
             this.btnExecute.Click += new System.EventHandler(this.button1_Click);
-
-            // === btnInject ===
-            this.btnInject.Text = "⚡  Inject";
-            this.btnInject.ForeColor = System.Drawing.Color.White;
-            this.btnInject.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            // 
+            // btnInject
+            // 
+            this.btnInject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnInject.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnInject.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.btnInject.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.btnInject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnInject.FlatAppearance.BorderSize = 1;
-            this.btnInject.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(50, 50, 50);
-            this.btnInject.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(45, 45, 45);
             this.btnInject.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnInject.ForeColor = System.Drawing.Color.White;
             this.btnInject.Location = new System.Drawing.Point(678, 10);
+            this.btnInject.Name = "btnInject";
             this.btnInject.Size = new System.Drawing.Size(110, 38);
             this.btnInject.TabIndex = 2;
-            this.btnInject.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnInject.Text = "⚡  Inject";
+            this.btnInject.UseVisualStyleBackColor = false;
             this.btnInject.Click += new System.EventHandler(this.button2_Click);
-
-            // === btnClear ===
-            this.btnClear.Text = "🗑  Clear";
-            this.btnClear.ForeColor = System.Drawing.Color.White;
-            this.btnClear.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            // 
+            // btnClear
+            // 
+            this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnClear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.btnClear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClear.FlatAppearance.BorderSize = 1;
-            this.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(50, 50, 50);
-            this.btnClear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(45, 45, 45);
             this.btnClear.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnClear.ForeColor = System.Drawing.Color.White;
             this.btnClear.Location = new System.Drawing.Point(560, 10);
+            this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(110, 38);
             this.btnClear.TabIndex = 3;
-            this.btnClear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnClear.Text = "🗑  Clear";
+            this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.button3_Click);
-
-            // === btnOpen ===
-            this.btnOpen.Text = "📂  Open";
-            this.btnOpen.ForeColor = System.Drawing.Color.White;
-            this.btnOpen.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            // 
+            // btnOpen
+            // 
+            this.btnOpen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnOpen.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnOpen.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.btnOpen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.btnOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpen.FlatAppearance.BorderSize = 1;
-            this.btnOpen.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(50, 50, 50);
-            this.btnOpen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(45, 45, 45);
-            this.btnOpen.Font = new System.Drawing.Font("Segoe UI", 10);
+            this.btnOpen.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnOpen.ForeColor = System.Drawing.Color.White;
             this.btnOpen.Location = new System.Drawing.Point(130, 10);
+            this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(110, 38);
             this.btnOpen.TabIndex = 4;
-            this.btnOpen.Cursor = System.Windows.Forms.Cursors.Hand;
-
-            // === btnSave ===
-            this.btnSave.Text = "💾  Save";
-            this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            this.btnOpen.Text = "📂  Open";
+            this.btnOpen.UseVisualStyleBackColor = false;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.FlatAppearance.BorderSize = 1;
-            this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(50, 50, 50);
-            this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(45, 45, 45);
-            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 10);
+            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.Location = new System.Drawing.Point(248, 10);
+            this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(110, 38);
             this.btnSave.TabIndex = 5;
-            this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
-
-
-            // Добавляем в панели
+            this.btnSave.Text = "💾  Save";
+            this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // titlePanel
+            // 
+            this.titlePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.titlePanel.Controls.Add(this.titleLabel);
             this.titlePanel.Controls.Add(this.settingsButton);
             this.titlePanel.Controls.Add(this.minimizeButton);
             this.titlePanel.Controls.Add(this.closeButton);
-
+            this.titlePanel.Location = new System.Drawing.Point(0, 0);
+            this.titlePanel.Name = "titlePanel";
+            this.titlePanel.Size = new System.Drawing.Size(800, 38);
+            this.titlePanel.TabIndex = 1;
+            this.titlePanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseDown);
+            this.titlePanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseMove);
+            this.titlePanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseUp);
+            // 
+            // titleLabel
+            // 
+            this.titleLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.titleLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(255)))));
+            this.titleLabel.Location = new System.Drawing.Point(12, 8);
+            this.titleLabel.Name = "titleLabel";
+            this.titleLabel.Size = new System.Drawing.Size(200, 22);
+            this.titleLabel.TabIndex = 0;
+            this.titleLabel.Text = "⚡ Velocity Executor";
+            this.titleLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseDown);
+            this.titleLabel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseMove);
+            this.titleLabel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TitlePanel_MouseUp);
+            // 
+            // settingsButton
+            // 
+            this.settingsButton.BackColor = System.Drawing.Color.Transparent;
+            this.settingsButton.FlatAppearance.BorderSize = 0;
+            this.settingsButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.settingsButton.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.settingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+            this.settingsButton.Location = new System.Drawing.Point(694, 1);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(36, 36);
+            this.settingsButton.TabIndex = 1;
+            this.settingsButton.TabStop = false;
+            this.settingsButton.Text = "⚙";
+            this.settingsButton.UseVisualStyleBackColor = false;
+            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            // 
+            // minimizeButton
+            // 
+            this.minimizeButton.BackColor = System.Drawing.Color.Transparent;
+            this.minimizeButton.FlatAppearance.BorderSize = 0;
+            this.minimizeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.minimizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.minimizeButton.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.minimizeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.minimizeButton.Location = new System.Drawing.Point(730, 4);
+            this.minimizeButton.Name = "minimizeButton";
+            this.minimizeButton.Size = new System.Drawing.Size(30, 28);
+            this.minimizeButton.TabIndex = 2;
+            this.minimizeButton.TabStop = false;
+            this.minimizeButton.Text = "─";
+            this.minimizeButton.UseVisualStyleBackColor = false;
+            this.minimizeButton.Click += new System.EventHandler(this.minimizeButton_Click);
+            // 
+            // closeButton
+            // 
+            this.closeButton.BackColor = System.Drawing.Color.Transparent;
+            this.closeButton.FlatAppearance.BorderSize = 0;
+            this.closeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.closeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.closeButton.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.closeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.closeButton.Location = new System.Drawing.Point(762, 4);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(30, 28);
+            this.closeButton.TabIndex = 3;
+            this.closeButton.TabStop = false;
+            this.closeButton.Text = "✕";
+            this.closeButton.UseVisualStyleBackColor = false;
+            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            // 
+            // bottomPanel
+            // 
+            this.bottomPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.bottomPanel.Controls.Add(this.btnExecute);
             this.bottomPanel.Controls.Add(this.btnOpen);
             this.bottomPanel.Controls.Add(this.btnSave);
             this.bottomPanel.Controls.Add(this.btnClear);
             this.bottomPanel.Controls.Add(this.btnInject);
-
-            // === Form1 ===
+            this.bottomPanel.Location = new System.Drawing.Point(0, 362);
+            this.bottomPanel.Name = "bottomPanel";
+            this.bottomPanel.Size = new System.Drawing.Size(800, 60);
+            this.bottomPanel.TabIndex = 2;
+            // 
+            // Form1
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.ClientSize = new System.Drawing.Size(800, 422);
-            this.BackColor = System.Drawing.Color.FromArgb(22, 22, 22);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Velocity Executor";
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.titlePanel);
             this.Controls.Add(this.bottomPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Velocity Executor";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.richTextBox1)).EndInit();
+            this.titlePanel.ResumeLayout(false);
+            this.bottomPanel.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         private FastColoredTextBoxNS.FastColoredTextBox richTextBox1;
