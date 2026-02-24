@@ -24,9 +24,20 @@ namespace RobloxExecutor.UI
         // Для перетаскивания окна
         private bool dragging = false;
         private Point dragStart;
+        
+        // Font
+        private PrivateFontCollection _pfc = new PrivateFontCollection();
+        private FontFamily _satoshiFamily;
+        public Font CustomFont(float size, FontStyle style = FontStyle.Regular) => new Font(_satoshiFamily, size, style);
+        
+        // Кэшированные иконки
+        private Bitmap _iconPlus;
+        private Bitmap _iconScript;
+
+        private Label _titleSettingsLabel;
 
         // ── Form Rounding (Region based) ────────────────────────────────
-        private void ApplyRoundedRegion(int radius = 10)
+        private void ApplyRoundedRegion(int radius = 12)
         {
             if (this.WindowState == FormWindowState.Maximized)
             {
@@ -77,7 +88,7 @@ namespace RobloxExecutor.UI
             
             // Тонкая рамка вокруг формы
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            using (var path = RoundedRect(new Rectangle(0, 0, this.Width - 1, this.Height - 1), 10))
+            using (var path = RoundedRect(new Rectangle(0, 0, this.Width - 1, this.Height - 1), 12))
             using (var pen = new Pen(Color.FromArgb(55, 55, 55), 1))
             {
                 e.Graphics.DrawPath(pen, path);
@@ -105,6 +116,7 @@ namespace RobloxExecutor.UI
         public Form1()
         {
             InitializeComponent();
+            LoadSatoshiFont();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -112,6 +124,24 @@ namespace RobloxExecutor.UI
             Logger.Log("Application started");
             AppSettings.Load();
             DiscordManager.Initialize();
+
+            // Инициализация иконок
+            _iconPlus = new Bitmap(Properties.Resources.plus, 14, 14);
+            _iconScript = new Bitmap(Properties.Resources.script, 12, 12);
+
+            // Логотип и кнопки заголовка
+            logoImage.Image = Properties.Resources.velocity;
+            settingsButton.Image = ResizeImage(Properties.Resources.settings, 18, 18);
+            minimizeButton.Image = ResizeImage(Properties.Resources.minimize, 14, 14);
+            closeButton.Image    = ResizeImage(Properties.Resources.cross, 14, 14);
+
+            // Кнопки нижней панели
+            btnExecute.Image = ResizeImage(Properties.Resources.execute, 22, 22);
+            btnClear.Image   = ResizeImage(Properties.Resources.clear, 18, 18); // X icon
+            btnOpen.Image    = ResizeImage(Properties.Resources.open, 18, 18);
+            btnSave.Image    = ResizeImage(Properties.Resources.save, 20, 20);
+            btnInject.Image  = ResizeImage(Properties.Resources.inject, 20, 20);
+            btnMonitor.Image = ResizeImage(Properties.Resources.monitor, 20, 20);
 
             AddNewTab();
             RefreshTabScroll();
@@ -127,6 +157,15 @@ namespace RobloxExecutor.UI
             autoInjectTimer.Tick += autoInjectTimer_Tick;
             if (AppSettings.AutoInject) autoInjectTimer.Start();
 
+            // Включить ClearType для всей формы
+            try { 
+                System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false); 
+            } catch { }
+            this.SetStyle(
+                ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.UserPaint |
+                ControlStyles.DoubleBuffer, true);
+
             Task.Run(() =>
             {
                 try { vel.StartCommunication(); }
@@ -136,6 +175,17 @@ namespace RobloxExecutor.UI
                     MessageBox.Show("Ошибка при запуске: " + ex.Message);
                 }
             });
+        }
+
+        private Bitmap ResizeImage(Bitmap source, int w, int h)
+        {
+            var bmp = new Bitmap(w, h);
+            using (var g = Graphics.FromImage(bmp))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(source, 0, 0, w, h);
+            }
+            return bmp;
         }
 
         // ── Tab System ──────────────────────────────────────────────────
@@ -256,27 +306,50 @@ namespace RobloxExecutor.UI
                 // Проверка на видимость (опционально, клиппинг и так работает)
                 if (drawRect.Right >= startX && drawRect.Left <= endX)
                 {
-                    Color bg = isActive ? Color.FromArgb(40, 40, 40) : Color.FromArgb(28, 28, 28);
-                    using (var b = new SolidBrush(bg))
-                        g.FillRectangle(b, drawRect);
+                    // Отрисовка закругленной вкладки (пилюля)
+                    int radius = 8;
+                    using (var path = new GraphicsPath())
+                    {
+                        var rect = new Rectangle(drawRect.X + 2, drawRect.Y + 2, drawRect.Width - 4, drawRect.Height - 4);
+                        path.AddArc(rect.X, rect.Y, radius * 2, radius * 2, 180, 90);
+                        path.AddArc(rect.Right - radius * 2, rect.Y, radius * 2, radius * 2, 270, 90);
+                        path.AddArc(rect.Right - radius * 2, rect.Bottom - radius * 2, radius * 2, radius * 2, 0, 90);
+                        path.AddArc(rect.X, rect.Bottom - radius * 2, radius * 2, radius * 2, 90, 90);
+                        path.CloseAllFigures();
+
+                        Color bg = isActive ? Color.FromArgb(50, 50, 50) : Color.FromArgb(22, 22, 22);
+                        using (var b = new SolidBrush(bg))
+                            g.FillPath(b, path);
+
+                        if (isActive)
+                        {
+                            using (var pen = new Pen(Color.FromArgb(70, 70, 70), 1))
+                                g.DrawPath(pen, path);
+                        }
+                    }
 
                     if (!isActive)
                     {
-                        using (var p = new Pen(Color.FromArgb(38, 38, 38), 1))
-                            g.DrawLine(p, drawRect.Right - 1, drawRect.Top + 5, drawRect.Right - 1, drawRect.Bottom - 5);
+                        // Разделитель между вкладками (тонкий)
+                        using (var p = new Pen(Color.FromArgb(40, 40, 40), 1))
+                            g.DrawLine(p, drawRect.Right - 1, drawRect.Top + 8, drawRect.Right - 1, drawRect.Bottom - 8);
                     }
 
                     Color fg = isActive ? Color.White : Color.FromArgb(140, 140, 140);
-                    using (var font = new Font("Segoe UI", 9F))
+                    using (var font = CustomFont(9F, FontStyle.Bold))
                     using (var b = new SolidBrush(fg))
                     {
-                        var textRect = new Rectangle(drawRect.X + 8, drawRect.Y, drawRect.Width - 26, drawRect.Height);
+                        var textRect = new Rectangle(drawRect.X + 26, drawRect.Y, drawRect.Width - 44, drawRect.Height);
                         var sf = new StringFormat
                         {
                             LineAlignment = StringAlignment.Center,
                             Trimming      = StringTrimming.EllipsisCharacter,
                             FormatFlags   = StringFormatFlags.NoWrap
                         };
+                        
+                        // Иконка скрипта
+                        g.DrawImage(_iconScript, drawRect.X + 4, drawRect.Y + (drawRect.Height - 12) / 2);
+                        
                         g.DrawString(tab.Title, font, b, textRect, sf);
                     }
 
@@ -284,7 +357,7 @@ namespace RobloxExecutor.UI
                     {
                         var closeRect = GetCloseRect(drawRect);
                         Color cx = isActive ? Color.FromArgb(170, 170, 170) : Color.FromArgb(90, 90, 90);
-                        using (var font = new Font("Segoe UI", 8F))
+                        using (var font = CustomFont(11F))
                         using (var b = new SolidBrush(cx))
                         {
                             var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
@@ -299,12 +372,7 @@ namespace RobloxExecutor.UI
             var plusRectDraw = new Rectangle(x + 4, 0, PLUS_WIDTH, TAB_HEIGHT);
             if (plusRectDraw.Right >= startX && plusRectDraw.Left <= endX)
             {
-                using (var b = new SolidBrush(Color.FromArgb(120, 120, 120)))
-                using (var font = new Font("Segoe UI", 11F))
-                {
-                    var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-                    g.DrawString("+", font, b, plusRectDraw, sf);
-                }
+                g.DrawImage(_iconPlus, plusRectDraw.X + (plusRectDraw.Width - 14) / 2, plusRectDraw.Y + (plusRectDraw.Height - 14) / 2);
             }
 
             if (needScroll)
@@ -324,9 +392,9 @@ namespace RobloxExecutor.UI
         {
             using (var bBg = new SolidBrush(Color.FromArgb(20, 20, 20)))
                 g.FillRectangle(bBg, rect);
-
+            
             Color fg = active ? Color.FromArgb(160, 160, 160) : Color.FromArgb(50, 50, 50);
-            using (var font = new Font("Segoe UI", 12F))
+            using (var font = CustomFont(12F))
             using (var b = new SolidBrush(fg))
             {
                 var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
@@ -439,11 +507,30 @@ namespace RobloxExecutor.UI
             if (settingsOverlay.Visible)
             {
                 settingsOverlay.BringToFront();
-                titleLabel.Text = "Settings";
+                logoImage.Visible = true; // иконка остаётся
+                // Показываем лейбл "Settings" рядом с иконкой
+                if (_titleSettingsLabel == null)
+                {
+                    _titleSettingsLabel = new Label
+                    {
+                        Text = "Settings",
+                        ForeColor = Color.White,
+                        BackColor = Color.Transparent,
+                        Font = CustomFont(10F, FontStyle.Bold),
+                        Location = new Point(38, 0),
+                        Size = new Size(80, 38),
+                        TextAlign = ContentAlignment.MiddleLeft
+                    };
+                    titlePanel.Controls.Add(_titleSettingsLabel);
+                }
+                _titleSettingsLabel.Visible = true;
+                ApplyCustomFont(settingsOverlay);
             }
             else
             {
-                titleLabel.Text = "⚡ Velocity Executor";
+                logoImage.Visible = true;
+                if (_titleSettingsLabel != null)
+                    _titleSettingsLabel.Visible = false;
             }
         }
 
@@ -460,7 +547,7 @@ namespace RobloxExecutor.UI
             {
                 Text = "← Back", FlatStyle = FlatStyle.Flat,
                 ForeColor = Color.White, BackColor = Color.Transparent,
-                Font = new Font("Segoe UI", 10),
+                Font = CustomFont(10F),
                 Location = new Point(10, 10), Size = new Size(80, 28)
             };
             settingsBackButton.FlatAppearance.BorderSize = 0;
@@ -468,29 +555,31 @@ namespace RobloxExecutor.UI
             settingsBackButton.FlatAppearance.MouseDownBackColor  = Color.Transparent;
             settingsBackButton.Click += (s, ev) => {
                 settingsOverlay.Visible = false;
-                titleLabel.Text = "⚡ Velocity Executor";
+                logoImage.Visible = true;
+                if (_titleSettingsLabel != null)
+                    _titleSettingsLabel.Visible = false;
             };
 
             settingsHeaderLabel = new Label
             {
                 Text = "Settings", ForeColor = Color.White,
-                Font = new Font("Segoe UI", 13, FontStyle.Bold),
+                Font = CustomFont(13F, FontStyle.Bold),
                 Location = new Point(15, 50), AutoSize = true
             };
 
             chkAlwaysOnTop = new ToggleSwitch { Location = new Point(15, 95) };
-            topLabel = new Label { Text = "Always on top", ForeColor = Color.White, Font = new Font("Segoe UI", 10, FontStyle.Bold), Location = new Point(65, 92), AutoSize = true };
-            topDesc  = new Label { Text = "The window will stay on top of other windows", ForeColor = Color.FromArgb(120,120,120), Font = new Font("Segoe UI", 8), Location = new Point(65, 110), AutoSize = true };
+            topLabel = new Label { Text = "Always on top", ForeColor = Color.White, Font = CustomFont(10F, FontStyle.Bold), Location = new Point(65, 92), AutoSize = true };
+            topDesc  = new Label { Text = "The window will stay on top of other windows", ForeColor = Color.FromArgb(120,120,120), Font = CustomFont(8F), Location = new Point(65, 110), AutoSize = true };
             chkAlwaysOnTop.CheckedChanged += (s, ev) => { AppSettings.AlwaysOnTop = chkAlwaysOnTop.Checked; AppSettings.Save(); this.TopMost = chkAlwaysOnTop.Checked; };
 
             chkAutoInject = new ToggleSwitch { Location = new Point(15, 155) };
-            injectLabel = new Label { Text = "Auto-inject", ForeColor = Color.White, Font = new Font("Segoe UI", 10, FontStyle.Bold), Location = new Point(65, 152), AutoSize = true };
-            injectDesc  = new Label { Text = "Velocity will automatically attach to Roblox", ForeColor = Color.FromArgb(120,120,120), Font = new Font("Segoe UI", 8), Location = new Point(65, 170), AutoSize = true };
+            injectLabel = new Label { Text = "Auto-inject", ForeColor = Color.White, Font = CustomFont(10F, FontStyle.Bold), Location = new Point(65, 152), AutoSize = true };
+            injectDesc  = new Label { Text = "Velocity will automatically attach to Roblox", ForeColor = Color.FromArgb(120,120,120), Font = CustomFont(8F), Location = new Point(65, 170), AutoSize = true };
             chkAutoInject.CheckedChanged += (s, ev) => { AppSettings.AutoInject = chkAutoInject.Checked; AppSettings.Save(); if (chkAutoInject.Checked) autoInjectTimer.Start(); else autoInjectTimer.Stop(); };
 
             chkAutoExecute = new ToggleSwitch { Location = new Point(15, 215) };
-            executeLabel = new Label { Text = "Auto-execute", ForeColor = Color.White, Font = new Font("Segoe UI", 10, FontStyle.Bold), Location = new Point(65, 212), AutoSize = true };
-            executeDesc  = new Label { Text = "Velocity will automatically execute scripts inside the /autoexec folder", ForeColor = Color.FromArgb(120,120,120), Font = new Font("Segoe UI", 8), Location = new Point(65, 230), Size = new Size(350, 30) };
+            executeLabel = new Label { Text = "Auto-execute", ForeColor = Color.White, Font = CustomFont(10F, FontStyle.Bold), Location = new Point(65, 212), AutoSize = true };
+            executeDesc  = new Label { Text = "Velocity will automatically execute scripts inside the /autoexec folder", ForeColor = Color.FromArgb(120,120,120), Font = CustomFont(8F), Location = new Point(65, 230), Size = new Size(350, 30) };
             chkAutoExecute.CheckedChanged += (s, ev) => { AppSettings.AutoExecute = chkAutoExecute.Checked; AppSettings.Save(); };
 
             settingsOverlay.Controls.AddRange(new Control[] {
@@ -499,6 +588,7 @@ namespace RobloxExecutor.UI
                 chkAutoInject, injectLabel, injectDesc,
                 chkAutoExecute, executeLabel, executeDesc
             });
+            ApplyCustomFont(settingsOverlay);
         }
 
         private async void autoInjectTimer_Tick(object sender, EventArgs e)
@@ -560,7 +650,7 @@ namespace RobloxExecutor.UI
             btnInject.Text = "Injecting...";
             VelocityStates state = await vel.Attach(procs[0].Id);
             btnInject.Enabled = true;
-            btnInject.Text = "⚡  Inject";
+            btnInject.Text = "Inject";
             if (state == VelocityStates.Attached)
             {
                 btnInject.BackColor = Color.FromArgb(20, 160, 80);
@@ -626,11 +716,84 @@ namespace RobloxExecutor.UI
             catch (Exception ex) { Logger.LogException("btnSave_Click", ex); }
         }
 
+        private void LoadSatoshiFont()
+        {
+            try
+            {
+                var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                string resourceName = "RobloxExecutor.Assets.Fonts.Satoshi-Regular.otf";
+                
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                {
+                    if (stream == null) 
+                    {
+                        resourceName = assembly.GetManifestResourceNames().FirstOrDefault(rn => rn.Contains("Satoshi"));
+                        if (resourceName == null) return;
+                        using (var stream2 = assembly.GetManifestResourceStream(resourceName)) { LoadFontFromStream(stream2); }
+                    }
+                    else { LoadFontFromStream(stream); }
+                }
+
+                ApplyCustomFont(this);
+            }
+            catch (Exception ex) { Logger.LogException("LoadSatoshiFont", ex); }
+        }
+
+        private void LoadFontFromStream(Stream stream)
+        {
+            byte[] data = new byte[stream.Length];
+            stream.Read(data, 0, (int)stream.Length);
+            IntPtr ptr = Marshal.AllocCoTaskMem(data.Length);
+            Marshal.Copy(data, 0, ptr, data.Length);
+            _pfc.AddMemoryFont(ptr, data.Length);
+            Marshal.FreeCoTaskMem(ptr);
+            if (_pfc.Families.Length > 0) _satoshiFamily = _pfc.Families[0];
+        }
+
+        private void ApplyCustomFont(Control parent)
+        {
+            if (_satoshiFamily == null) return;
+            foreach (Control c in parent.Controls)
+            {
+                if (!(c is FastColoredTextBox))
+                {
+                    float size = 9F;
+                    FontStyle style = FontStyle.Regular;
+
+                    // Specific sizing logic
+                    if (c == btnExecute || c == btnInject || c == btnClear || c == btnOpen || c == btnSave || c == btnMonitor) { size = 10F; }
+                    else if (c == settingsButton || c == minimizeButton || c == closeButton) { size = 10F; }
+                    else { size = c.Font.Size; style = c.Font.Style; }
+
+                    c.Font = CustomFont(size, style);
+
+                    if (c is ButtonBase btn) btn.UseCompatibleTextRendering = false;
+                    if (c is Label lbl) lbl.UseCompatibleTextRendering = false;
+
+                    if (c.HasChildren) ApplyCustomFont(c);
+                }
+            }
+        }
+
+        private void BottomPanel_Paint(object sender, PaintEventArgs e)
+        {
+            // Тонкая линия разделитель сверху #424242
+            using (var pen = new Pen(Color.FromArgb(66, 66, 66), 1))
+            {
+                e.Graphics.DrawLine(pen, 0, 0, bottomPanel.Width, 0);
+            }
+        }
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             Logger.Log("Application closed");
             DiscordManager.Shutdown();
             try { vel.StopCommunication(); } catch { }
+            
+            _iconPlus?.Dispose();
+            _iconScript?.Dispose();
+            _pfc.Dispose();
+            
             base.OnFormClosing(e);
         }
     }

@@ -91,6 +91,9 @@
     <Compile Include="UI\Controls\ToggleSwitch.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Controls\RoundedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +105,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -114,13 +118,14 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
+    <EmbeddedResource Include="Assets\Fonts\Satoshi-Regular.otf" />
     <None Include="packages.config" />
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">
@@ -130,6 +135,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <Content Include="Resources\clear.png" />
+    <Content Include="Resources\cross.png" />
+    <Content Include="Resources\execute.png" />
+    <Content Include="Resources\inject.png" />
+    <Content Include="Resources\maximize.png" />
+    <Content Include="Resources\minimize.png" />
+    <Content Include="Resources\monitor.png" />
+    <Content Include="Resources\open.png" />
+    <Content Include="Resources\plus.png" />
+    <Content Include="Resources\save.png" />
+    <Content Include="Resources\script.png" />
+    <Content Include="Resources\settings.png" />
+    <Content Include="Resources\velocity.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
